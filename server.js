@@ -7,20 +7,14 @@ let express = require('express'),
         "updateDate": "2016-05-23T00:00:00.0Z",
         "titleText": "Heutiger Speiseplan für die Mensa Griebnitzsee",
         "mainText": "Wir haben leider noch nicht nachgeguckt. Sorry.",
-}
-
-JSON text multi-item example
-        "uid": "1",
-        "updateDate": (new Date).toString(),
-        "titleText": "Heutiger Speiseplan für die Mensa Griebnitzsee",
-        "mainText": 'Wir haben leider noch nicht nachgeguckt. Sorry.'
     };
+
 
 app.listen(port);
 
 let intervalID = setInterval(updateMenu, 86400000); // updates the menu once a day
 
-app.route('/getMenu')
+app.route('/getMenu2')
     .get(getMenu);
 
 app.route('/updateMenu')
