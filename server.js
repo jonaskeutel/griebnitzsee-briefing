@@ -3,7 +3,7 @@ let express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
     currentMenu = {
-        "uid": "urn:uuid:1335c695-cfb8-4ebb-abbd-80da344efa6b",
+        "uid": "1",
         "updateDate": "2016-05-23T00:00:00.0Z",
         "titleText": "Heutiger Speiseplan für die Mensa Griebnitzsee",
         "mainText": "Wir haben leider noch nicht nachgeguckt. Sorry.",
@@ -14,7 +14,7 @@ app.listen(port);
 
 let intervalID = setInterval(updateMenu, 86400000); // updates the menu once a day
 
-app.route('/getMenu2')
+app.route('/getMenu3')
     .get(getMenu);
 
 app.route('/updateMenu')
