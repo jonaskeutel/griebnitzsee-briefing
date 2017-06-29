@@ -40,7 +40,7 @@ function updateMenu(req, res) {
         }
         currentMenu.mainText = mealsResult;
     });
-    yyyy-MM-dd'T'HH:mm:ss'.0Z'
+    
     currentMenu.updateDate = apiDate + "T00:00:00Z";
     res.send("Currently updating menu. Should be available every second.")
 }
