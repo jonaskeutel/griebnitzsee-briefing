@@ -11,7 +11,7 @@ let express = require('express'),
 
 app.listen(port);
 
-let intervalID = setInterval(updateMenu}, 86400000); // updates the menu once a day
+let intervalID = setInterval(updateMenu, 86400000); // updates the menu once a day
 
 app.route('/getMenu')
     .get(getMenu);
