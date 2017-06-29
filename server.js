@@ -12,9 +12,10 @@ let express = require('express'),
 
 app.listen(port);
 
+updateMenu({},{});
 let intervalID = setInterval(updateMenu, 86400000); // updates the menu once a day
 
-app.route('/getMenu3')
+app.route('/getMenu')
     .get(getMenu);
 
 app.route('/updateMenu')
@@ -39,6 +40,7 @@ function updateMenu(req, res) {
         }
         currentMenu.mainText = mealsResult;
     });
-    currentMenu.updateDate = date.toString();
+    yyyy-MM-dd'T'HH:mm:ss'.0Z'
+    currentMenu.updateDate = apiDate + "T00:00:00Z";
     res.send("Currently updating menu. Should be available every second.")
 }
