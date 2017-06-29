@@ -41,7 +41,7 @@ function updateMenu(req, res) {
         currentMenu.mainText = mealsResult;
     });
 
-    currentMenu.updateDate = apiDate + "T00:00:00Z";
+    currentMenu.updateDate = apiDate + "T00:00:00.0Z";
     if (res) {
         res.send("Currently updating menu. Should be available every second.")
     }
