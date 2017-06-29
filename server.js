@@ -11,11 +11,13 @@ let express = require('express'),
 
 app.listen(port);
 
+let intervalID = setInterval(updateMenu}, 86400000); // updates the menu once a day
+
 app.route('/getMenu')
     .get(getMenu);
 
 app.route('/updateMenu')
-    .get(updateMenu);
+    .get(updateMenu); // can be called to manually update the menu
 
 function getMenu(req, res) {
     res.json(currentMenu);
