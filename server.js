@@ -27,6 +27,8 @@ function getMenu(req, res) {
 
 function updateMenu(req, res) {
     let date = new Date;
+    let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+    let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
     let apiDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     let endpoint = 'http://openmensa.org/api/v2/canteens/62/days/' + apiDate + '/meals';
     let mealsResult = 'Heute gibt es: ';
