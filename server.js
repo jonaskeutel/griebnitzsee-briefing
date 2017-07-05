@@ -7,6 +7,7 @@ let express = require('express'),
         "updateDate": "2016-05-23T00:00:00.0Z",
         "titleText": "Heutiger Speiseplan für die Mensa Griebnitzsee",
         "mainText": "Wir haben leider noch nicht nachgeguckt. Sorry.",
+        "redirectionUrl": "http://www.studentenwerk-potsdam.de/mensa-griebnitzsee.html#ueberschrift_h2"
     };
 
 
@@ -64,6 +65,7 @@ function updateMenu(req, res) {
                 "updateDate": "2016-05-23T00:00:00.0Z",
                 "titleText": "Updating Menu",
                 "mainText": "Currently updating menu. Should be available every second.",
+                "redirectionUrl": "http://www.studentenwerk-potsdam.de/mensa-griebnitzsee.html#ueberschrift_h2"
             })
         }
     } catch (e) {
@@ -73,6 +75,7 @@ function updateMenu(req, res) {
             "updateDate": "2016-05-23T00:00:00.0Z",
             "titleText": "Error Updating Menu",
             "mainText": "There was an error updating the menu. Please try again later.",
+            "redirectionUrl": "http://www.studentenwerk-potsdam.de/mensa-griebnitzsee.html#ueberschrift_h2"
         })
     } finally {
 
