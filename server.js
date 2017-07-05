@@ -10,9 +10,11 @@ let express = require('express'),
     };
 
 
-app.listen(port);
+app.listen(port, function(){
+  // console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  updateMenu();
+});
 
-updateMenu();
 let intervalID = setInterval(updateMenu, 1000*60*60); // updates the menu once an hour
 
 app.route('/getMenu')
@@ -23,9 +25,10 @@ app.route('/updateMenu')
 
 function getMenu(req, res) {
     try {
+        console.log("Trying to send menu: ", currentMenu);
         res.json(currentMenu);
     } catch (e) {
-
+        console.log("Error at sending menu");
     } finally {
 
     }
@@ -33,13 +36,16 @@ function getMenu(req, res) {
 
 function updateMenu(req, res) {
     try {
+        console.log("Trying to update menu");
         let date = new Date;
         let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
         let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
         let apiDate = date.getFullYear() + '-' + month + '-' + day;
         let endpoint = 'http://openmensa.org/api/v2/canteens/62/days/' + apiDate + '/meals';
         let mealsResult = 'Heute gibt es: ';
+        console.log("about to send request to menu api");
         request(endpoint, function(error, response, body){
+            console.log("Request to update menu successful.");
             if(!body) {
                 currentMenu.mainText = "Heute hat die Mensa leider geschlossen";
             }
@@ -52,6 +58,7 @@ function updateMenu(req, res) {
 
         currentMenu.updateDate = apiDate + "T00:00:00.0Z";
         if (res) {
+            console.log("About to send that logging was successfully initiated.");
             res.json({
                 "uid": "1",
                 "updateDate": "2016-05-23T00:00:00.0Z",
@@ -60,6 +67,7 @@ function updateMenu(req, res) {
             })
         }
     } catch (e) {
+        console.log("Error while updating menu.");
         res.json({
             "uid": "1",
             "updateDate": "2016-05-23T00:00:00.0Z",
