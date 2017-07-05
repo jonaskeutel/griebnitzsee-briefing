@@ -13,7 +13,7 @@ let express = require('express'),
 app.listen(port);
 
 updateMenu();
-let intervalID = setInterval(updateMenu, 86400000); // updates the menu once a day
+let intervalID = setInterval(updateMenu, 1000*60*60); // updates the menu once an hour
 
 app.route('/getMenu')
     .get(getMenu);
@@ -22,29 +22,51 @@ app.route('/updateMenu')
     .get(updateMenu); // can be called to manually update the menu
 
 function getMenu(req, res) {
-    res.json(currentMenu);
+    try {
+        res.json(currentMenu);
+    } catch (e) {
+
+    } finally {
+
+    }
 }
 
 function updateMenu(req, res) {
-    let date = new Date;
-    let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
-    let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    let apiDate = date.getFullYear() + '-' + month + '-' + day;
-    let endpoint = 'http://openmensa.org/api/v2/canteens/62/days/' + apiDate + '/meals';
-    let mealsResult = 'Heute gibt es: ';
-    request(endpoint, function(error, response, body){
-        if(!body) {
-          currentMenu.mainText = "Heute hat die Mensa leider geschlossen";
-        }
-        let meals = JSON.parse(body)
-        for (const meal of meals) {
-          mealsResult += meal.category + ': ' + meal.name + ', ';
-        }
-        currentMenu.mainText = mealsResult;
-    });
+    try {
+        let date = new Date;
+        let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+        let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        let apiDate = date.getFullYear() + '-' + month + '-' + day;
+        let endpoint = 'http://openmensa.org/api/v2/canteens/62/days/' + apiDate + '/meals';
+        let mealsResult = 'Heute gibt es: ';
+        request(endpoint, function(error, response, body){
+            if(!body) {
+                currentMenu.mainText = "Heute hat die Mensa leider geschlossen";
+            }
+            let meals = JSON.parse(body)
+            for (const meal of meals) {
+                mealsResult += meal.category + ': ' + meal.name + ', ';
+            }
+            currentMenu.mainText = mealsResult;
+        });
 
-    currentMenu.updateDate = apiDate + "T00:00:00.0Z";
-    if (res) {
-        res.send("Currently updating menu. Should be available every second.")
+        currentMenu.updateDate = apiDate + "T00:00:00.0Z";
+        if (res) {
+            res.json({
+                "uid": "1",
+                "updateDate": "2016-05-23T00:00:00.0Z",
+                "titleText": "Updating Menu",
+                "mainText": "Currently updating menu. Should be available every second.",
+            })
+        }
+    } catch (e) {
+        res.json({
+            "uid": "1",
+            "updateDate": "2016-05-23T00:00:00.0Z",
+            "titleText": "Error Updating Menu",
+            "mainText": "There was an error updating the menu. Please try again later.",
+        })
+    } finally {
+
     }
 }
